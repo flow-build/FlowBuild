@@ -19,3 +19,6 @@
 [submodule "packages/compose"]
 	path = packages/compose
 	url = https://github.com/flow-build/compose.git
+[submodule "packages/cli"]
+	path = packages/cli
+	url = https://github.com/flow-build/cli.git
