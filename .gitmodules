@@ -3,7 +3,7 @@
 	url = https://github.com/flow-build/engine.git
 [submodule "docs"]
 	path = docs
-	url = https://github.com/flow-build/flowbuild.github.io.git
+	url = https://github.com/flow-build/flow-build.github.io.git
 [submodule "packages/admin"]
 	path = packages/admin
 	url = https://github.com/flow-build/admin.git
