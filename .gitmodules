@@ -13,9 +13,6 @@
 [submodule "packages/workflow"]
 	path = packages/workflow
 	url = https://github.com/flow-build/workflow.git
-[submodule "packages/cli"]
-	path = packages/cli
-	url = https://github.com/flow-build/workflow.git
 [submodule "packages/react-workflow-manager"]
 	path = packages/react-workflow-manager
 	url = https://github.com/flow-build/react-workflow-manager.git
