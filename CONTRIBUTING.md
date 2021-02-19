@@ -27,6 +27,7 @@ with a fix.
 ## <a name="submit"></a> Submission Guidelines
 
 ### Submitting an Issue
+
 Before you submit your issue search the archive, maybe your question was already answered.
 
 If your issue appears to be a bug and hasn't been reported, open a new issue. Help us to maximize
@@ -35,6 +36,7 @@ Providing the following information will increase the chances of your issue bein
 quickly:
 
 ### Submitting a Pull Request
+
 Before you submit your pull request consider the following guidelines:
 
 - Search [GitHub](https://github.com/flow-build/engine/pulls) for an open or closed Pull Request
@@ -102,35 +104,33 @@ from the main (upstream) repository:
 
 - Delete the remote branch on GitHub either through the GitHub web UI or your local shell as follows:
 
-    ```shell
-    git push origin --delete my-fix-branch
-    ```
+  ```shell
+  git push origin --delete my-fix-branch
+  ```
 
 - Check out the master branch:
 
-    ```shell
-    git checkout master -f
-    ```
+  ```shell
+  git checkout master -f
+  ```
 
 - Delete the local branch:
 
-    ```shell
-    git branch -D my-fix-branch
-    ```
+  ```shell
+  git branch -D my-fix-branch
+  ```
 
 - Update your master with the latest upstream version:
 
-    ```shell
-    git pull --ff upstream master
-    ```
+  ```shell
+  git pull --ff upstream master
+  ```
 
 ## <a name="format"></a> Coding Format
 
 To ensure consistency throughout the source code, review our [code conventions](https://github.com/flow-build/flow-build/wiki/Branch-Pattern).
 
-
 [github]: https://github.com/flow-build/flow=build
-
 
 ## Conventional commits
 
