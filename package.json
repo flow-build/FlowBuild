@@ -4,7 +4,6 @@
   "description": "flowbuild definition reference",
   "main": "index.js",
   "scripts": {
-    "preinstall": "git submodule init && git submodule update",
     "postinstall": "lerna bootstrap",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

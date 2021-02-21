@@ -4,21 +4,12 @@
 [submodule "docs"]
 	path = docs
 	url = https://github.com/flow-build/flow-build.github.io.git
-[submodule "packages/admin"]
-	path = packages/admin
-	url = https://github.com/flow-build/admin.git
-[submodule "packages/cockpit"]
-	path = packages/cockpit
-	url = https://github.com/flow-build/cockpit.git
 [submodule "packages/workflow"]
 	path = packages/workflow
 	url = https://github.com/flow-build/workflow.git
 [submodule "packages/react-workflow-manager"]
 	path = packages/react-workflow-manager
 	url = https://github.com/flow-build/react-workflow-manager.git
-[submodule "packages/compose"]
-	path = packages/compose
-	url = https://github.com/flow-build/compose.git
 [submodule "packages/cli"]
 	path = packages/cli
 	url = https://github.com/flow-build/cli.git
