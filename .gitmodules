@@ -22,3 +22,9 @@
 [submodule "packages/cli"]
 	path = packages/cli
 	url = https://github.com/flow-build/cli.git
+[submodule "packages/observer-api"]
+	path = packages/observer-api
+	url = https://github.com/flow-build/observer.git
+[submodule "packages/mission-control-api"]
+	path = packages/mission-control-api
+	url = https://github.com/flow-build/mission-control.git
