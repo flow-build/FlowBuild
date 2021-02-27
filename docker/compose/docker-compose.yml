@@ -1,0 +1,66 @@
+version: '3.7'
+
+services:
+  cockpit_observer:
+    build:
+      context: ../../
+      dockerfile: ./docker/observer.LOCAL.Dockerfile
+    container_name: cockpit-observer
+    volumes:
+      - ../../packages/observer-api/src:/observer-api/src
+      - /observer-api/node_modules
+    ports:
+      - 7227:7227
+      - 9229:9229
+      - 3200:3000
+    env_file: '.env'
+    networks:
+      - flowbuild
+
+  cockpit_mission_control:
+    build:
+      context: ../../
+      dockerfile: ./docker/mission-control.LOCAL.Dockerfile
+    container_name: cockpit-mission-control
+    volumes:
+      - ../../packages/mission-control-api/src:/mission-control-api/src
+      - ../../packages/mission-control-api/db:/mission-control-api/db
+      - /mission-control-api/node_modules
+    ports:
+      - 7230:7227
+      - 9230:9229
+      - 3100:3000
+    env_file: '.env'
+    networks:
+      - flowbuild
+
+  db: # postgres
+    image: postgres:10
+    container_name: flowbuild-database
+    ports:
+      - 5432:5432
+    env_file: '.env'
+    networks:
+      - flowbuild
+
+  mqtt:
+    image: hivemq/hivemq4:latest
+    container_name: mqtt
+    ports:
+      - 8080:8080
+      - 1883:1883
+      - 8000:8000
+    networks:
+      - flowbuild
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 7070:8080
+    networks:
+      - flowbuild
+
+networks:
+  flowbuild:
+    name: flowbuild
