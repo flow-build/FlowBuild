@@ -22,7 +22,8 @@ COPY --from=Builder /mission-control-api/node_modules ./node_modules
 # add `node_modules/.bin` to $PATH
 ENV PATH /mission-control-api/node_modules/.bin:$PATH
 
-COPY  ./src /mission-control-api/src
+COPY  ./packages/mission-control-api/src ./src
+COPY  ./packages/mission-control-api/db ./db
 RUN rm -rf /mission-control-api/**/__tests__
 
 COPY ./package.json /mission-control-api/package.json

@@ -1,21 +1,53 @@
 version: '3.7'
 
 services:
+
+  workflow:
+    build:
+      context: ../../
+      dockerfile: ./docker/workflow.LOCAL.Dockerfile
+    container_name: workflow
+    volumes:
+      - ../../packages/workflow/src:/workflow/src
+      - ../../packages/workflow/knexfile.js:/workflow/knexfile.js
+      - ../../packages/workflow/db:/workflow/db
+      - /workflow/node_modules
+      - ../../packages/engine/src:/workflow/node_modules/@flowbuild/engine/src
+    depends_on: 
+      - workflow-migrator
+      - db
+      - mqtt
+    ports:
+      - 7227:7227
+      - 9229:9229
+      - 3000:3000
+    env_file: '.env'
+    networks:
+      - flowbuild
+    entrypoint: "npm run watch"
+
+    
   cockpit_observer:
     build:
       context: ../../
       dockerfile: ./docker/observer.LOCAL.Dockerfile
     container_name: cockpit-observer
+    depends_on: 
+      - workflow-migrator
+      - db
     volumes:
       - ../../packages/observer-api/src:/observer-api/src
       - /observer-api/node_modules
+      - ../../packages/engine/src:/observer-api/node_modules/@flowbuild/engine/src
     ports:
-      - 7227:7227
-      - 9229:9229
-      - 3200:3000
+      - 7230:7227
+      - 9230:9229
+      - 3100:3000
     env_file: '.env'
+    entrypoint: "npm run watch"
     networks:
       - flowbuild
+
 
   cockpit_mission_control:
     build:
@@ -26,22 +58,85 @@ services:
       - ../../packages/mission-control-api/src:/mission-control-api/src
       - ../../packages/mission-control-api/db:/mission-control-api/db
       - /mission-control-api/node_modules
+      - ../../packages/engine/src:/mission-control-api/node_modules/@flowbuild/engine/src
+    depends_on: 
+      - mission-control-migrator
+      - db
+      - mqtt
     ports:
-      - 7230:7227
-      - 9230:9229
-      - 3100:3000
+      - 7240:7227
+      - 9240:9229
+      - 3200:3000
+    env_file: '.env'
+    entrypoint: "npm run watch"
+    networks:
+      - flowbuild
+
+
+  # admin:
+  #   build:
+  #     context: ../../
+  #     dockerfile: ./docker/admin.LOCAL.Dockerfile
+  #   container_name: cockpit-admin-web
+  #   depends_on: 
+  #     - cockpit_observer
+  #     - cockpit_mission_control
+  #   volumes:
+  #     - ../../packages/admin/src:/admin/src
+  #     - /admin/node_modules
+  #   ports:
+  #     - 7250:7227
+  #     - 9250:9229
+  #     - 4000:4000
+  #     - 8888:8888
+  #   env_file: '.env'
+  #   networks:
+  #     - flowbuild
+
+
+  workflow-migrator:
+    image: node:12.19.1
+    container_name: workflow_migrations
+    depends_on:
+      - db
+    volumes:
+      - ../../packages/workflow/knexfile.js:/workflow/knexfile.js
+      - ../../packages/workflow/db:/workflow/db
+      - ../../packages/workflow/scripts:/workflow/scripts
+      - ../../node_modules:/node_modules
+    env_file: '.env'
+    networks:
+      - flowbuild
+    entrypoint: "node /workflow/scripts/migrate_database.js"
+
+
+  mission-control-migrator:
+    image: node:12.19.1
+    container_name: mission_control_migrations
+    depends_on:
+      - db
+    volumes:
+      - ../../packages/mission-control-api/knexfile.js:/mission-control/knexfile.js
+      - ../../packages/mission-control-api/db:/mission-control/db
+      - ../../packages/mission-control-api/scripts:/mission-control/scripts
+      - ../../node_modules:/node_modules
+    env_file: '.env'
+    networks:
+      - flowbuild
+    entrypoint: "node /mission-control-api/scripts/migrate_database.js"
+
+
+  db: # postgres
+    image: postgres:11.4
+    container_name: flowbuild-database
+    ports:
+      - 5432:5432
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d/
     env_file: '.env'
     networks:
       - flowbuild
 
-  db: # postgres
-    image: postgres:10
-    container_name: flowbuild-database
-    ports:
-      - 5432:5432
-    env_file: '.env'
-    networks:
-      - flowbuild
 
   mqtt:
     image: hivemq/hivemq4:latest
@@ -53,13 +148,16 @@ services:
     networks:
       - flowbuild
 
+
   adminer:
     image: adminer
-    restart: always
+    container_name: adminer
     ports:
       - 7070:8080
     networks:
       - flowbuild
+
+
 
 networks:
   flowbuild:

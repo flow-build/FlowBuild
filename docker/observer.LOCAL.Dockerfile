@@ -21,8 +21,8 @@ ENV PATH /observer-api/node_modules/.bin:$PATH
 COPY  ./packages/observer-api/src ./src
 RUN rm -rf /observer-api/**/__tests__
 
-COPY ./package.json ./package.json
-COPY ./package-lock.json ./package-lock.json
+COPY ./packages/observer-api/package.json ./package.json
+COPY ./packages/observer-api/package-lock.json ./package-lock.json
 
 
 ENTRYPOINT ["node", "/observer-api/src/index.js"]

@@ -22,7 +22,7 @@ COPY --from=Builder /observer-api/node_modules ./node_modules
 # add `node_modules/.bin` to $PATH
 ENV PATH /observer-api/node_modules/.bin:$PATH
 
-COPY  ./src /observer-api/src
+COPY  ./packages/observer-api/src ./src
 RUN rm -rf /observer-api/**/__tests__
 
 COPY ./package.json /observer-api/package.json

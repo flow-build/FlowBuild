@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "lerna bootstrap",
-    "compose:local": "docker-compose -f docker/compose/docker-compose.yml"
+    "compose:local:build": "docker-compose -f docker/compose/docker-compose.yml build",
+    "compose:local:up": "docker-compose -f docker/compose/docker-compose.yml up -d",
+    "compose:local:up-discrete": "docker-compose -f docker/compose/docker-compose.yml up -d"
   },
   "repository": {
     "type": "git",
