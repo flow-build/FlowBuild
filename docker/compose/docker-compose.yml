@@ -119,11 +119,12 @@ services:
       - ../../packages/mission-control-api/knexfile.js:/mission-control/knexfile.js
       - ../../packages/mission-control-api/db:/mission-control/db
       - ../../packages/mission-control-api/scripts:/mission-control/scripts
+      - ../../packages/mission-control-api/src:/mission-control/src
       - ../../node_modules:/node_modules
     env_file: '.env'
     networks:
       - flowbuild
-    entrypoint: "node /mission-control-api/scripts/migrate_database.js"
+    entrypoint: "node /mission-control/scripts/migrate_database.js"
 
 
   db: # postgres
