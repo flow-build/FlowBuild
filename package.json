@@ -4,7 +4,6 @@
   "description": "flowbuild definition reference",
   "main": "index.js",
   "scripts": {
-    "preinstall": "git submodule init && git submodule update",
     "postinstall": "lerna bootstrap",
     "compose:local:build": "docker-compose -f docker/compose/docker-compose.yml build",
     "compose:local:up": "docker-compose -f docker/compose/docker-compose.yml up -d",
@@ -28,6 +27,7 @@
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.3.2",
     "eslint-plugin-prettier": "^3.3.1",
     "lerna": "^3.20.2",
     "prettier": "^2.2.1"

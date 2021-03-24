@@ -42,7 +42,7 @@ services:
     ports:
       - 7230:7227
       - 9230:9229
-      - 3100:3000
+      - 3100:3100
     env_file: '.env'
     entrypoint: "npm run watch"
     networks:
@@ -73,25 +73,26 @@ services:
       - flowbuild
 
 
-  # admin:
-  #   build:
-  #     context: ../../
-  #     dockerfile: ./docker/admin.LOCAL.Dockerfile
-  #   container_name: cockpit-admin-web
-  #   depends_on: 
-  #     - cockpit_observer
-  #     - cockpit_mission_control
-  #   volumes:
-  #     - ../../packages/admin/src:/admin/src
-  #     - /admin/node_modules
-  #   ports:
-  #     - 7250:7227
-  #     - 9250:9229
-  #     - 4000:4000
-  #     - 8888:8888
-  #   env_file: '.env'
-  #   networks:
-  #     - flowbuild
+  admin:
+    build:
+      context: ../../
+      dockerfile: ./docker/admin.LOCAL.Dockerfile
+    container_name: cockpit-admin-web
+    depends_on: 
+      - cockpit_observer
+      - cockpit_mission_control
+    volumes:
+      - ../../packages/admin/src:/admin/src
+      - ./.env:/admin/.env.local
+      - /admin/node_modules
+    ports:
+      - 7250:7227
+      - 9250:9229
+      - 4000:3000
+      - 8888:8888
+    env_file: '.env'
+    networks:
+      - flowbuild
 
 
   workflow-migrator:
